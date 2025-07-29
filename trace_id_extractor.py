@@ -22,7 +22,7 @@ def extract_trace_ids(log_content: str) -> Set[str]:
     Returns:
         Set of unique trace IDs
     """
-    pattern = r'\[T-([a-f0-9]+),S-[a-f0-9]+\]'
+    pattern = r'\[T-([a-f0-9x]+),S-[a-f0-9x]+\]'
     matches = re.findall(pattern, log_content)
     return set(matches)
 
@@ -37,7 +37,7 @@ def extract_trace_and_span_pairs(log_content: str) -> Set[Tuple[str, str]]:
     Returns:
         Set of unique (trace_id, span_id) tuples
     """
-    pattern = r'\[T-([a-f0-9]+),S-([a-f0-9]+)\]'
+    pattern = r'\[T-([a-f0-9x]+),S-([a-f0-9x]+)\]'
     matches = re.findall(pattern, log_content)
     return set(matches)
 
