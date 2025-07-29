@@ -12,11 +12,36 @@ When dealing with application logs that contain distributed tracing information,
 - ✅ Handles messy, unstructured log data
 - ✅ Removes duplicate trace IDs automatically
 - ✅ Generates DQL queries with OR operators
+- ✅ **NEW: Web UI for user-friendly interaction**
 - ✅ Command-line interface for easy automation
 - ✅ Optional file output
 - ✅ Verbose mode for debugging
+- ✅ Copy to clipboard and download functionality
+- ✅ Toggle options for include spans and verbose mode
 
 ## Installation
+
+### For Web UI (Recommended)
+
+1. Ensure you have Python 3.6+ installed:
+   ```bash
+   python3 --version
+   ```
+
+2. Install Flask dependencies:
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+3. Start the web interface:
+   ```bash
+   ./start_ui.sh
+   # or manually: python3 app.py
+   ```
+
+4. Open your browser and go to [http://localhost:5000](http://localhost:5000)
+
+### For Command Line Only
 
 No installation required! Just ensure you have Python 3.6+ installed.
 
@@ -27,7 +52,28 @@ python --version
 
 ## Usage
 
-### Basic Usage
+### Web UI (Recommended for most users)
+
+The easiest way to use the Trace ID Helper is through the web interface:
+
+1. **Start the web server:**
+   ```bash
+   ./start_ui.sh
+   ```
+
+2. **Open your browser** and navigate to [http://localhost:5000](http://localhost:5000)
+
+3. **Upload a log file** or **paste log content** directly into the text area
+
+4. **Configure options:**
+   - Toggle "Include Span IDs" to include both trace and span IDs in the output
+   - Toggle "Verbose Mode" to see extraction statistics
+
+5. **Click "Generate DQL Query"** to process your logs
+
+6. **Copy or download** the generated DQL query
+
+### Command Line Interface
 
 Extract trace IDs and print DQL query to stdout:
 
@@ -35,7 +81,7 @@ Extract trace IDs and print DQL query to stdout:
 python trace_id_extractor.py your-log-file.txt
 ```
 
-### Save to File
+#### Save to File
 
 Extract trace IDs and save DQL query to a file:
 
@@ -43,7 +89,7 @@ Extract trace IDs and save DQL query to a file:
 python trace_id_extractor.py your-log-file.txt output-query.txt
 ```
 
-### Verbose Mode
+#### Verbose Mode
 
 Get additional information about the extraction process:
 
@@ -51,7 +97,7 @@ Get additional information about the extraction process:
 python trace_id_extractor.py your-log-file.txt --verbose
 ```
 
-### Include Span IDs
+#### Include Span IDs
 
 Include both trace IDs and span IDs in the output:
 
@@ -106,6 +152,32 @@ python trace_id_extractor.py app-logs.txt --include-spans --verbose
 ("T-301fb981f95b9c81,S-20662c2dfb736f38" OR "T-301fb981f95b9c81,S-40f75dca6424aa0d" OR "T-301fb981f95b9c81,S-9cf5b2b9a790087e" OR "T-301fb981f95b9c81,S-a3a075049a6053eb")
 Found 4 unique trace/span pairs
 ```
+
+## Web UI Features
+
+The web interface provides a user-friendly way to interact with the trace ID extraction tool:
+
+### 🌟 Key Features
+- **Drag & Drop or Paste**: Upload log files or paste content directly
+- **Real-time Processing**: Instant DQL query generation
+- **Toggle Options**: Easy switches for span IDs and verbose mode
+- **Copy to Clipboard**: One-click copying of generated queries
+- **Download Results**: Save DQL queries as `.dql` files
+- **Clear Guidelines**: Built-in instructions and examples
+- **Responsive Design**: Works on desktop and mobile devices
+
+### 📱 User Interface
+- **Clean, modern design** with intuitive controls
+- **Step-by-step guidance** for new users
+- **Example log format** shown for reference
+- **Error handling** with helpful feedback messages
+- **Visual feedback** for all user actions
+
+### 🔧 Technical Details
+- Built with **Flask** web framework
+- **No database required** - stateless processing
+- **Lightweight** - minimal dependencies
+- **Cross-platform** - runs on Windows, macOS, Linux
 
 ## Command Line Options
 

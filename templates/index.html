@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trace ID Helper - Extract Trace IDs from Logs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Trace ID Helper</h1>
+            <p class="subtitle">Extract trace IDs from messy log data and generate DQL queries</p>
+        </header>
+
+        <div class="guidelines">
+            <h2>📋 How to Use</h2>
+            <div class="guideline-content">
+                <p><strong>Supported Log Format:</strong> The tool recognizes trace IDs in the format <code>[T-{traceId},S-{spanId}]</code></p>
+                <div class="example">
+                    <h4>Example log entries:</h4>
+                    <pre>2025-07-26 16:34:50.031 INFO XxxxAdapter.lambda$afterBodyRead$0(): [http-nio-8080-exec-5] [T-a9f624eexxxxxxxx,S-a9f624eexxxxxxxx] : [POST] /xxx/xx/xxxx
+2025-07-26 16:34:50.060 INFO XxxxAdapter.lambda$afterBodyRead$0(): [http-nio-8080-exec-4] [T-f0c8e2a8xxxxxxxx,S-f0c8e2a8xxxxxxxx] : [POST] /xxx/xx/xxxx</pre>
+                </div>
+                <p><strong>Steps:</strong></p>
+                <ol>
+                    <li>Upload a log file OR paste your log content below</li>
+                    <li>Configure your options (include spans, verbose mode)</li>
+                    <li>Click "Generate DQL Query" to process</li>
+                    <li>Copy the result or download as a file</li>
+                </ol>
+            </div>
+        </div>
+
+        <form id="logForm" class="form-container">
+            <div class="input-section">
+                <h3>📄 Input Options</h3>
+                
+                <div class="input-group">
+                    <label for="log_file" class="input-label">
+                        <span class="label-text">Upload Log File</span>
+                        <span class="label-description">Supported formats: .txt, .log</span>
+                    </label>
+                    <input type="file" id="log_file" name="log_file" accept=".txt,.log" class="file-input">
+                </div>
+
+                <div class="separator">
+                    <span>OR</span>
+                </div>
+
+                <div class="input-group">
+                    <label for="log_text" class="input-label">
+                        <span class="label-text">Paste Log Content</span>
+                        <span class="label-description">Paste your log data directly here</span>
+                    </label>
+                    <textarea id="log_text" name="log_text" placeholder="Paste your log content here..." rows="8" class="text-input"></textarea>
+                </div>
+            </div>
+
+            <div class="options-section">
+                <h3>⚙️ Options</h3>
+                
+                <div class="option-group">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="include_spans" name="include_spans" class="toggle-input">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-text">
+                            <strong>Include Span IDs</strong>
+                            <small>Include both trace IDs and span IDs in the output (format: T-{trace-id},S-{span-id})</small>
+                        </span>
+                    </label>
+                </div>
+
+                <div class="option-group">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="verbose" name="verbose" class="toggle-input">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-text">
+                            <strong>Verbose Mode</strong>
+                            <small>Show additional statistics about the extraction process</small>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="action-section">
+                <button type="submit" class="primary-button">
+                    <span class="button-text">Generate DQL Query</span>
+                    <div class="spinner" id="spinner"></div>
+                </button>
+            </div>
+        </form>
+
+        <div id="results" class="results-section" style="display: none;">
+            <h3>✅ Results</h3>
+            <div class="result-content">
+                <div class="result-header">
+                    <span id="result-info" class="result-info"></span>
+                    <div class="result-actions">
+                        <button id="copyButton" class="secondary-button">📋 Copy</button>
+                        <button id="downloadButton" class="secondary-button">💾 Download</button>
+                    </div>
+                </div>
+                <div class="result-query">
+                    <pre id="dql-output"></pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="error" class="error-section" style="display: none;">
+            <h3>❌ Error</h3>
+            <div class="error-content">
+                <p id="error-message"></p>
+            </div>
+        </div>
+
+        <footer>
+            <p>🛠️ Built with Flask • <a href="https://github.com/DennisLiuCk/trace-id-helper" target="_blank">View on GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
