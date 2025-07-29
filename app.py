@@ -63,7 +63,7 @@ def process_log():
             if not trace_span_pairs:
                 return jsonify({
                     'success': False,
-                    'error': 'No trace/span pairs found in the log content. Please check the format.'
+                    'error': 'No trace/span pairs found in the log content. Expected format: [T-{hexadecimal},S-{hexadecimal}] where trace and span IDs contain only hexadecimal characters (0-9, a-f). If your log contains masked IDs with \'x\' characters, please use the original unmasked log data.'
                 })
             dql_query = generate_dql_query_with_spans(trace_span_pairs)
             count = len(trace_span_pairs)
@@ -73,7 +73,7 @@ def process_log():
             if not trace_ids:
                 return jsonify({
                     'success': False,
-                    'error': 'No trace IDs found in the log content. Please check the format.'
+                    'error': 'No trace IDs found in the log content. Expected format: [T-{hexadecimal},S-{hexadecimal}] where trace and span IDs contain only hexadecimal characters (0-9, a-f). If your log contains masked IDs with \'x\' characters, please use the original unmasked log data.'
                 })
             dql_query = generate_dql_query(trace_ids)
             count = len(trace_ids)
