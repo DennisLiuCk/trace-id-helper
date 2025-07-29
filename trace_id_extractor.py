@@ -99,13 +99,13 @@ def process_log_file(input_file: Path, output_file: Path = None, include_spans: 
     if include_spans:
         trace_span_pairs = extract_trace_and_span_pairs(log_content)
         if not trace_span_pairs:
-            print("Warning: No trace/span pairs found in the log file")
+            print("Warning: No trace/span pairs found in the log file. Expected format: [T-{hexadecimal},S-{hexadecimal}] where IDs contain only 0-9 and a-f characters.")
             return ""
         dql_query = generate_dql_query_with_spans(trace_span_pairs)
     else:
         trace_ids = extract_trace_ids(log_content)
         if not trace_ids:
-            print("Warning: No trace IDs found in the log file")
+            print("Warning: No trace IDs found in the log file. Expected format: [T-{hexadecimal},S-{hexadecimal}] where IDs contain only 0-9 and a-f characters.")
             return ""
         dql_query = generate_dql_query(trace_ids)
     
